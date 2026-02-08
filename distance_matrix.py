@@ -1,7 +1,9 @@
 import math
 import numpy as np
+from typing import Tuple
 
-def remove_gaps(seq1, seq2):
+
+def remove_gaps(seq1: str, seq2: str) -> list[Tuple[str, str]]:
     """Remove the gap positions from a pair of aligned sequences.
     It returns a list of (char1, char2) pairs that represent the nucleotide pairs."""
     pairs = []
@@ -10,7 +12,7 @@ def remove_gaps(seq1, seq2):
             pairs.append((a, b))
     return pairs
 
-def count_differences(pairs):
+def count_differences(pairs: list[Tuple[str, str]]) -> Tuple[int, int]:
     """Count how many positions differ.
     Returns:
     diff: number of positions where a != b
@@ -23,28 +25,30 @@ def count_differences(pairs):
     return diff, total
 
 
-def compute_p_distance(diff, total):
+def compute_p_distance(diff: int, total: int) -> float:
     """Calculate p-distance (diff / total) between two sequences.
     For total = 0, the distance is defined as 0."""
     if total == 0:
         return 0.0
     return diff / total
 
-def corrected_distance(p):
+
+def corrected_distance(p: float) -> float:
     """Apply Jukes-Cantor correction formula (-0.75 * ln(1 - (4/3) * p)).
     Returns 30 for p >= 0.75 as the formula becomes undefined."""
     if p >= 0.75:
         return 30.0
     return -0.75 * math.log(1 - (4/3) * p)
 
-def compute_pair_distance(seq1, seq2):
+
+def compute_pair_distance(seq1: str, seq2: str) -> float:
     """Calculate the evolutionary distance value for one aligned pair."""
     pairs = remove_gaps(seq1, seq2)
     diff, total = count_differences(pairs)
     p = compute_p_distance(diff, total)
     return corrected_distance(p)
 
-def ComputeDistMatrix(aligned_dict):
+def ComputeDistMatrix(aligned_dict: dict[Tuple[int, int], Tuple[str, str]]) -> list[list[float]]:
     """Build the evolutionary distance matrix from aligned sequence pairs.
     Input: dict(tuple(int, int) -> tuple(string, string))
     Output: list(list(float))."""

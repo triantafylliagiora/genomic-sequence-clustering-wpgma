@@ -1,14 +1,19 @@
-def check_line_empty_or_whitespace(line):
+from typing import Tuple, Set
+
+
+def check_line_empty_or_whitespace(line: str) -> bool:
     """Returns True if the line is empty or has whitespace."""
     return not line or not line.strip()
 
-def check_line_starts_with_arrow(line):
+
+def check_line_starts_with_arrow(line: str) -> None:
     """Make sure the line begins with '>' otherwise raise an error."""
     stripped = line.lstrip()
     if not stripped.startswith('>'):
         raise Exception("malformed input")
 
-def extract_label_and_sequence_parts(content):
+
+def extract_label_and_sequence_parts(content: str) -> Tuple[str, str]:
     """Split the line (after '>') into a label and the sequence.
     The label must come first followed by at least one whitespace and the sequence.
     Raise an error if the format is incorrect."""
@@ -17,46 +22,41 @@ def extract_label_and_sequence_parts(content):
         raise Exception("malformed input")
     return parts[0], parts[1]
 
-def validate_label_not_empty(label):
+
+def validate_label_not_empty(label: str) -> None:
     """Raise an exception if the label is empty."""
     if not label:
         raise Exception("malformed input")
 
-def validate_sequence_not_empty(sequence):
+
+def validate_sequence_not_empty(sequence: str) -> None:
     """Raise an exception if the sequence is empty."""
     if not sequence:
         raise Exception("malformed input")
 
-#def validate_label_is_not_sequence(label):
-    #seq_like = set(label) <= {'A','C','G','T'} and len(label) >= 3
-    #if seq_like:
-        #raise Exception("malformed input")
-
-#If we would need to verify wether a label is part of the sequence, we would include this function.
-#Example given: >ACTCATCGT CTCG ACGCACGTCGAT
-#However, if we are strict we can not apply this function, as there is the  label may consist of a combination of 'A','C','G','T'.
-#Example given: >Cat ACTCGAT CTCG ACGCACGTCGAT
-
-def normalize_sequence_whitespace(sequence):
+def normalize_sequence_whitespace(sequence: str) -> str:
     """Remove all spaces and tabs from the sequence and convert it to uppercase."""
     sequence = sequence.replace(' ', '').replace('\t', '')
     return sequence.upper()
 
-def validate_sequence_characters(sequence):
+
+def validate_sequence_characters(sequence: str) -> None:
     """Check that every character in the sequence is one of A, C, G, T.
     Raise an error if any invalid character is found."""
     for char in sequence:
         if char not in 'ACGT':
             raise Exception("malformed input")
 
-def check_duplicates_label_sequence(label, sequence, seen_labels, seen_sequences):
+
+def check_duplicates_label_sequence(label: str, sequence: str, seen_labels: Set[str], seen_sequences: Set[str]) -> None:
     """Ensure that the label unique or raise an error if it has already been seen."""
     if label in seen_labels:
         raise Exception("malformed input")
     else:
         seen_labels.add(label)
 
-def ParseSeqFile(fasta):
+
+def ParseSeqFile(fasta: str) -> list[Tuple[str, str]]:
     """Parse a fasta file where each line must contain:
         >label sequence
     The function validates the formatting, the uniqueness and the allowed characters.

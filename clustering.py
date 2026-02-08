@@ -1,6 +1,8 @@
 import numpy as np
+from typing import Tuple, Union
 
-def merge_labels(labels, row, col):
+
+def merge_labels(labels: list[str], row: int, col: int) -> list[str]:
     """Create a new cluster label by merging two existing labels.
     The function takes the labels at positions row and col, wraps them
     into one cluster, removes the original labels and inserts the new label at the start of the list."""
@@ -9,7 +11,7 @@ def merge_labels(labels, row, col):
     new_labels.insert(0, new_label)
     return new_labels
 
-def reduction_matrix(matrix, labels):
+def reduction_matrix(matrix: np.ndarray, labels: list[str]) -> Tuple[np.ndarray, list[str]]:
     """This function identifies the pair of clusters with the smallest
     non‑zero distance, merges them into a new cluster and constructs
     a new distance matrix according to the WPGMA rule.
@@ -31,8 +33,6 @@ def reduction_matrix(matrix, labels):
                     row, col = i, j
     if not nonzero_entries:
         raise Exception("Sequences are identical. They should be further examined.")
-    #For instance, it could be the instance of two identical inputs with different labels (H. Sapines, Homo Sapiens).
-    # These should probably be merged, not clustered.
     if row is None or col is None:
         raise Exception("Malformed input")
 
@@ -56,7 +56,7 @@ def reduction_matrix(matrix, labels):
     return WPGMA_matrix, new_labels
 
 
-def Cluster(matrix, labels):
+def Cluster(matrix: Union[list[list[float]], np.ndarray], labels: list[str]) -> str:
     """Perform WPGMA clustering until one cluster remains.
     Input : list(list(float)), list(string)
     Output : string (representing the tree)"""

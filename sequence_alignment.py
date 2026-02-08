@@ -1,10 +1,13 @@
-def sigma(a, b):
+from typing import Tuple
+
+
+def sigma(a: str, b: str) -> int:
     """Define match/mismatch scores after comparing two characters."""
     match, mismatch = 5, -2
     return match if a == b else mismatch
 
 
-def get_needleman_wunsch(seq1, seq2):
+def get_needleman_wunsch(seq1: str, seq2: str) -> list[list[int]]:
     """Build the Needleman–Wunsch DP matrix for two sequences."""
     match, mismatch, gap = 5, -2, -6
     n, m = len(seq1), len(seq2)
@@ -25,7 +28,7 @@ def get_needleman_wunsch(seq1, seq2):
     return S
 
 
-def get_traceback(seq1, seq2):
+def get_traceback(seq1: str, seq2: str) -> Tuple[str, str]:
     """Trace back through the matrix to build the aligned sequences.
     It returns a pair of aligned strings."""
     match, mismatch, gap = 5, -2, -6
@@ -53,7 +56,7 @@ def get_traceback(seq1, seq2):
     return (aligned_seq1, aligned_seq2)
 
 
-def AlignByDP(list_of_sequences):
+def AlignByDP(list_of_sequences: list[Tuple[str, str]]) -> dict[Tuple[int, int], Tuple[str, str]]:
     """Align pairwise all pairs of sequences using Needleman–Wunsch.
     Input: list(tuple(str, str)).
     Returns: dict(tuple(int, int) -> tuple(string, string))"""
