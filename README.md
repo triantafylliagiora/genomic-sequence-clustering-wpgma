@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Genomic Clustering Tool
 
 A Python-based bioinformatics pipeline for phylogenetic analysis of genomic sequences using sequence alignment and hierarchical clustering.
@@ -155,7 +154,3 @@ Triantafyllia Giora - https://github.com/triantafylliagiora
 - Needleman-Wunsch algorithm for sequence alignment
 - Jukes-Cantor model for evolutionary distance
 - WPGMA method for hierarchical clustering
-=======
-# genomic-sequence-clustering-wpgma
-Pairwise alignment, evolutionary distance computation and WPGMA clustering of genomic sequences (PAD project)
->>>>>>> 362361c8fde185e640551a549918ef6bfaac3e5b
