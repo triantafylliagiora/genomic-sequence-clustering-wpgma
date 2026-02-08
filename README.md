@@ -147,7 +147,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Authors
 
-Triantafyllia Giora - https://github.com/triantafylliagiora
+Triantafyllia Giora
+Jesus Esteban
 
 ## Acknowledgments
 
